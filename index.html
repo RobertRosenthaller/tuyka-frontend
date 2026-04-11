@@ -32,9 +32,9 @@ body{background:#f5f5f5;display:flex;justify-content:center;padding:0;min-height
 .img-lightbox.show{display:flex}
 .img-lightbox img{max-width:95%;max-height:95%;object-fit:contain;border-radius:12px;animation:lbIn .2s ease}
 .sbody{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;padding-bottom:8px}.sbody::-webkit-scrollbar{display:none}
-.bnav{position:sticky;bottom:0;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);border-top:1px solid rgba(0,0,0,.06);display:flex;align-items:center;padding:8px 0 20px;z-index:100;flex-shrink:0}
+.bnav{position:sticky;bottom:0;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);border-top:1px solid rgba(0,0,0,.06);display:flex;align-items:center;padding:10px 0 16px;z-index:100;flex-shrink:0}
 .ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;font-size:11px;font-weight:700;color:#bbb;transition:.2s}.ni.on{color:var(--g)}.ni svg{width:22px;height:22px}
-.ctab{flex:1.5;background:var(--g);margin:0 8px;border-radius:22px;padding:0 12px;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:6px;cursor:pointer;color:#fff;font-size:13px;font-weight:800;box-shadow:0 4px 16px rgba(46,204,113,.4);height:40px}
+.ctab{flex:1.5;background:var(--g);margin:0 8px;border-radius:22px;padding:0 16px;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:6px;cursor:pointer;color:#fff;font-size:14px;font-weight:800;box-shadow:0 4px 16px rgba(46,204,113,.4);height:44px;min-height:44px}
 /* header */
 .hdr{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 0;flex-shrink:0}
 .logo{font-size:26px;font-weight:900;color:var(--g);letter-spacing:-1px}
@@ -1838,66 +1838,71 @@ if(window.visualViewport){
   });
 }
 
-// Свайп назад (слева направо) с плавной анимацией
+// Свайп назад — iOS-стиль
 (function(){
-  let startX=0, startY=0, dragging=false;
-  const phone=document.querySelector('.phone');
+  let sx=0, sy=0, active=null, backEl=null, started=false;
 
-  function getBackScreen(id){
+  function getBackId(id){
     if(id==='product') return prevScreen;
     if(id==='catItems') return 'catalog';
     if(id==='catalog'||id==='cart'||id==='profile') return 'home';
     return null;
   }
 
-  phone.addEventListener('touchstart', e=>{
-    startX=e.touches[0].clientX;
-    startY=e.touches[0].clientY;
-    dragging=false;
+  document.addEventListener('touchstart', e=>{
+    sx=e.touches[0].clientX;
+    sy=e.touches[0].clientY;
+    started=false; active=null; backEl=null;
   },{passive:true});
 
-  phone.addEventListener('touchmove', e=>{
-    if(startX > 20) return; // узкая зона — только первые 20px от края
-    const dx=e.touches[0].clientX-startX;
-    const dy=Math.abs(e.touches[0].clientY-startY);
-    if(dx>8 && dy<50){
-      dragging=true;
-      const active=document.querySelector('.screen.active');
-      if(!active || active.id==='home') return;
-      const backId=getBackScreen(active.id);
-      const screenW=phone.offsetWidth;
-      const maxDrag=screenW*0.5; // до половины экрана
-      const limited=Math.min(dx, maxDrag);
-      // показываем предыдущий экран позади
-      if(backId){
-        document.querySelectorAll('.screen').forEach(s=>{
-          if(s.id===backId){ s.style.display='flex'; s.style.opacity='1'; s.style.transform=`translateX(${-screenW*0.3*(1-limited/maxDrag)}px)`; }
-        });
-      }
-      const progress=limited/maxDrag;
-      active.style.transform=`translateX(${limited}px)`;
-      active.style.opacity=String(1-progress*0.15);
-      active.style.boxShadow=`-6px 0 20px rgba(0,0,0,${0.1-progress*0.07})`;
+  document.addEventListener('touchmove', e=>{
+    if(sx>25) return;
+    const dx=e.touches[0].clientX-sx;
+    const dy=Math.abs(e.touches[0].clientY-sy);
+    if(dx<5||dy>dx*1.5) return;
+
+    if(!started){
+      const cur=document.querySelector('.screen.active');
+      if(!cur||cur.id==='home') return;
+      const bid=getBackId(cur.id);
+      if(!bid) return;
+      active=cur; backEl=document.getElementById(bid);
+      if(backEl){backEl.style.display='flex';backEl.style.opacity='1';backEl.style.transform='translateX(-30%)';backEl.style.transition='none';}
+      active.style.transition='none';
+      started=true;
     }
+    if(!started||!active) return;
+    const dx2=Math.min(e.touches[0].clientX-sx, window.innerWidth);
+    const p=dx2/window.innerWidth;
+    active.style.transform='translateX('+dx2+'px)';
+    if(backEl) backEl.style.transform='translateX('+(-30+p*30)+'%)';
   },{passive:true});
 
-  phone.addEventListener('touchend', e=>{
-    const dx=e.changedTouches[0].clientX-startX;
-    const dy=Math.abs(e.changedTouches[0].clientY-startY);
-    const active=document.querySelector('.screen.active');
+  document.addEventListener('touchend', e=>{
+    if(!started||!active){started=false;return;}
+    const dx=e.changedTouches[0].clientX-sx;
+    const W=window.innerWidth;
+    const bid=getBackId(active.id);
 
-    // сбрасываем стили
-    document.querySelectorAll('.screen').forEach(s=>{
-      s.style.transform=''; s.style.opacity=''; s.style.boxShadow='';
-      if(!s.classList.contains('active')) s.style.display='';
-    });
-
-    if(dragging && dx>80 && dy<50 && startX<=20){
-      const id=active?.id;
-      const backId=getBackScreen(id);
-      if(backId) go(backId);
+    if(dx>W*0.35){
+      if(backEl){backEl.style.transition='transform .22s ease';backEl.style.transform='translateX(0)';}
+      active.style.transition='transform .22s ease';
+      active.style.transform='translateX('+W+'px)';
+      setTimeout(()=>{
+        if(active){active.style.cssText='';}
+        if(backEl){backEl.style.cssText='';}
+        if(bid) go(bid);
+      },220);
+    } else {
+      active.style.transition='transform .18s ease';
+      active.style.transform='translateX(0)';
+      if(backEl){backEl.style.transition='transform .18s ease';backEl.style.transform='translateX(-30%)';}
+      setTimeout(()=>{
+        if(active) active.style.cssText='';
+        if(backEl){backEl.style.cssText='';backEl.style.display='';}
+      },180);
     }
-    dragging=false;
+    started=false;active=null;backEl=null;
   },{passive:true});
 })();
 
