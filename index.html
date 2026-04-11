@@ -979,7 +979,7 @@ let PRODUCTS=[
     "emoji": "🥟"
   }
 ];
-const POPULAR_IDS=[11, 31, 86, 61, 71, 92, 102, 115];
+const POPULAR_IDS=[1, 11, 21, 31, 41, 51, 61, 71];
 const MIN_ORDER=1000, FREE_DELIVERY=3000, DELIVERY_COST=250;
 const API_BASE='https://tuyka-backend-production.up.railway.app';
 // Координаты даркстора (центр Грозного — поменяй на реальные)
@@ -1378,11 +1378,7 @@ function cq(id,delta,from){
   if(delta>0&&(cart[id]||0)===1) showToast('Добавлено в корзину 🛒');
 }
 
-function renderHomeGrid(){
-  const ids=POPULAR_IDS.map(id=>PRODUCTS.find(x=>x.id===id)).filter(Boolean);
-  const items=ids.length>=4 ? ids : PRODUCTS.slice(0,8);
-  document.getElementById('homeGrid').innerHTML=items.map(p=>prodCardHTML(p,'home')).join('');
-}
+function renderHomeGrid(){document.getElementById('homeGrid').innerHTML=POPULAR_IDS.map(id=>{const p=PRODUCTS.find(x=>x.id===id);return p?prodCardHTML(p,'home'):'';}).join('');}
 
 function renderCatalog(){
   document.getElementById('catGrid').innerHTML=CATS.map(c=>`
@@ -1842,8 +1838,6 @@ if(window.visualViewport){
   });
 }
 
-
-})();
 
 if('serviceWorker' in navigator){
   window.addEventListener('load', () => {
