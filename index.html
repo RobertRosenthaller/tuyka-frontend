@@ -32,9 +32,9 @@ body{background:#f5f5f5;display:flex;justify-content:center;padding:0;min-height
 .img-lightbox.show{display:flex}
 .img-lightbox img{max-width:95%;max-height:95%;object-fit:contain;border-radius:12px;animation:lbIn .2s ease}
 .sbody{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;padding-bottom:8px}.sbody::-webkit-scrollbar{display:none}
-.bnav{position:sticky;bottom:0;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);border-top:1px solid rgba(0,0,0,.06);display:flex;padding:10px 0 calc(30px + env(safe-area-inset-bottom,16px));z-index:100;flex-shrink:0}
+.bnav{position:sticky;bottom:0;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);border-top:1px solid rgba(0,0,0,.06);display:flex;align-items:center;padding:8px 0 calc(14px + env(safe-area-inset-bottom,0px));z-index:100;flex-shrink:0}
 .ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;font-size:11px;font-weight:700;color:#bbb;transition:.2s}.ni.on{color:var(--g)}.ni svg{width:22px;height:22px}
-.ctab{flex:1.5;background:var(--g);margin:0 8px;border-radius:22px;padding:6px 12px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;color:#fff;font-size:11px;font-weight:800;box-shadow:0 4px 16px rgba(46,204,113,.4)}
+.ctab{flex:1.5;background:var(--g);margin:0 8px;border-radius:22px;padding:10px 12px;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:6px;cursor:pointer;color:#fff;font-size:13px;font-weight:800;box-shadow:0 4px 16px rgba(46,204,113,.4);height:44px}
 /* header */
 .hdr{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 0;flex-shrink:0}
 .logo{font-size:26px;font-weight:900;color:var(--g);letter-spacing:-1px}
@@ -1842,7 +1842,14 @@ if(window.visualViewport){
 (function(){
   let startX=0, startY=0, dragging=false;
   const phone=document.querySelector('.phone');
-  
+
+  function getBackScreen(id){
+    if(id==='product') return prevScreen;
+    if(id==='catItems') return 'catalog';
+    if(id==='catalog'||id==='cart'||id==='profile') return 'home';
+    return null;
+  }
+
   phone.addEventListener('touchstart', e=>{
     startX=e.touches[0].clientX;
     startY=e.touches[0].clientY;
@@ -1850,17 +1857,24 @@ if(window.visualViewport){
   },{passive:true});
 
   phone.addEventListener('touchmove', e=>{
-    if(startX > 30) return;
+    if(startX > 20) return; // узкая зона — только первые 20px от края
     const dx=e.touches[0].clientX-startX;
     const dy=Math.abs(e.touches[0].clientY-startY);
-    if(dx>10 && dy<40){
+    if(dx>8 && dy<50){
       dragging=true;
       const active=document.querySelector('.screen.active');
-      if(active && active.id!=='home'){
-        const progress=Math.min(dx/200,1);
-        active.style.transform=`translateX(${dx*0.4}px)`;
-        active.style.opacity=1-progress*0.3;
+      if(!active || active.id==='home') return;
+      const backId=getBackScreen(active.id);
+      // показываем предыдущий экран позади
+      if(backId){
+        document.querySelectorAll('.screen').forEach(s=>{
+          if(s.id===backId){ s.style.display='flex'; s.style.opacity='1'; s.style.transform=`translateX(${-40+dx*0.15}px)`; }
+        });
       }
+      const progress=Math.min(dx/280,1);
+      active.style.transform=`translateX(${dx*0.7}px)`;
+      active.style.opacity=String(1-progress*0.2);
+      active.style.boxShadow=`-8px 0 24px rgba(0,0,0,${0.12-progress*0.08})`;
     }
   },{passive:true});
 
@@ -1868,17 +1882,17 @@ if(window.visualViewport){
     const dx=e.changedTouches[0].clientX-startX;
     const dy=Math.abs(e.changedTouches[0].clientY-startY);
     const active=document.querySelector('.screen.active');
-    
-    if(active){
-      active.style.transform='';
-      active.style.opacity='';
-    }
-    
-    if(dragging && dx>60 && dy<50 && startX<40){
+
+    // сбрасываем стили
+    document.querySelectorAll('.screen').forEach(s=>{
+      s.style.transform=''; s.style.opacity=''; s.style.boxShadow='';
+      if(!s.classList.contains('active')) s.style.display='';
+    });
+
+    if(dragging && dx>80 && dy<50 && startX<=20){
       const id=active?.id;
-      if(id==='product') go(prevScreen);
-      else if(id==='catItems') go('catalog');
-      else if(id==='catalog'||id==='cart'||id==='profile') go('home');
+      const backId=getBackScreen(id);
+      if(backId) go(backId);
     }
     dragging=false;
   },{passive:true});
