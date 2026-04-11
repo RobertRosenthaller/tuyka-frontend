@@ -1838,72 +1838,7 @@ if(window.visualViewport){
   });
 }
 
-// Свайп назад — iOS-стиль
-(function(){
-  let sx=0, sy=0, active=null, backEl=null, started=false;
 
-  function getBackId(id){
-    if(id==='product') return prevScreen;
-    if(id==='catItems') return 'catalog';
-    if(id==='catalog'||id==='cart'||id==='profile') return 'home';
-    return null;
-  }
-
-  document.addEventListener('touchstart', e=>{
-    sx=e.touches[0].clientX;
-    sy=e.touches[0].clientY;
-    started=false; active=null; backEl=null;
-  },{passive:true});
-
-  document.addEventListener('touchmove', e=>{
-    if(sx>25) return;
-    const dx=e.touches[0].clientX-sx;
-    const dy=Math.abs(e.touches[0].clientY-sy);
-    if(dx<5||dy>dx*1.5) return;
-
-    if(!started){
-      const cur=document.querySelector('.screen.active');
-      if(!cur||cur.id==='home') return;
-      const bid=getBackId(cur.id);
-      if(!bid) return;
-      active=cur; backEl=document.getElementById(bid);
-      if(backEl){backEl.style.display='flex';backEl.style.opacity='1';backEl.style.transform='translateX(-30%)';backEl.style.transition='none';}
-      active.style.transition='none';
-      started=true;
-    }
-    if(!started||!active) return;
-    const dx2=Math.min(e.touches[0].clientX-sx, window.innerWidth);
-    const p=dx2/window.innerWidth;
-    active.style.transform='translateX('+dx2+'px)';
-    if(backEl) backEl.style.transform='translateX('+(-30+p*30)+'%)';
-  },{passive:true});
-
-  document.addEventListener('touchend', e=>{
-    if(!started||!active){started=false;return;}
-    const dx=e.changedTouches[0].clientX-sx;
-    const W=window.innerWidth;
-    const bid=getBackId(active.id);
-
-    if(dx>W*0.35){
-      if(backEl){backEl.style.transition='transform .22s ease';backEl.style.transform='translateX(0)';}
-      active.style.transition='transform .22s ease';
-      active.style.transform='translateX('+W+'px)';
-      setTimeout(()=>{
-        if(active){active.style.cssText='';}
-        if(backEl){backEl.style.cssText='';}
-        if(bid) go(bid);
-      },220);
-    } else {
-      active.style.transition='transform .18s ease';
-      active.style.transform='translateX(0)';
-      if(backEl){backEl.style.transition='transform .18s ease';backEl.style.transform='translateX(-30%)';}
-      setTimeout(()=>{
-        if(active) active.style.cssText='';
-        if(backEl){backEl.style.cssText='';backEl.style.display='';}
-      },180);
-    }
-    started=false;active=null;backEl=null;
-  },{passive:true});
 })();
 
 if('serviceWorker' in navigator){
