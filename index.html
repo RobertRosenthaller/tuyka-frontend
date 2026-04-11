@@ -20,12 +20,12 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--g:#2ECC71;--gd:#27AE60;--gl:rgba(46,204,113,.13);--r:18px;--rs:12px;font-family:'Nunito',sans-serif}
 body{background:#f5f5f5;display:flex;justify-content:center;padding:0;min-height:100vh;overflow:hidden}
-.phone{width:100%;max-width:480px;height:100vh;background:#f5f5f5;border-radius:0;overflow:hidden;box-shadow:none;position:relative}
+.phone{width:100%;max-width:480px;height:100dvh;background:#f5f5f5;border-radius:0;overflow:hidden;box-shadow:none;position:relative;display:flex;flex-direction:column}
 @media(min-width:480px){
   body{background:#e8f0e8;padding:20px 0}
   .phone{width:375px;height:min(812px,calc(100vh - 40px));border-radius:44px;box-shadow:0 30px 80px rgba(0,0,0,.25)}
 }
-.screen{display:none;flex-direction:column;height:100%;min-height:0;position:relative;background:#f5f5f5;overflow:hidden;opacity:0;transition:opacity .18s ease}
+.screen{display:none;flex-direction:column;flex:1;min-height:0;position:relative;background:#f5f5f5;overflow:hidden;opacity:0;transition:opacity .18s ease}
 .screen.active{display:flex;opacity:1}
 /* Lightbox для фото */
 .img-lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999;display:none;align-items:center;justify-content:center;cursor:zoom-out}
