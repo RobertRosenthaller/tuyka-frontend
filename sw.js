@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tuyka-v1';
+const CACHE_NAME = 'tuyka-v2';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
