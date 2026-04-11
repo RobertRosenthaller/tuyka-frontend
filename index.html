@@ -32,9 +32,9 @@ body{background:#f5f5f5;display:flex;justify-content:center;padding:0;min-height
 .img-lightbox.show{display:flex}
 .img-lightbox img{max-width:95%;max-height:95%;object-fit:contain;border-radius:12px;animation:lbIn .2s ease}
 .sbody{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;padding-bottom:8px}.sbody::-webkit-scrollbar{display:none}
-.bnav{position:sticky;bottom:0;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);border-top:1px solid rgba(0,0,0,.06);display:flex;align-items:center;padding:8px 0 calc(14px + env(safe-area-inset-bottom,0px));z-index:100;flex-shrink:0}
+.bnav{position:sticky;bottom:0;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);border-top:1px solid rgba(0,0,0,.06);display:flex;align-items:center;padding:8px 0 20px;z-index:100;flex-shrink:0}
 .ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;font-size:11px;font-weight:700;color:#bbb;transition:.2s}.ni.on{color:var(--g)}.ni svg{width:22px;height:22px}
-.ctab{flex:1.5;background:var(--g);margin:0 8px;border-radius:22px;padding:10px 12px;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:6px;cursor:pointer;color:#fff;font-size:13px;font-weight:800;box-shadow:0 4px 16px rgba(46,204,113,.4);height:44px}
+.ctab{flex:1.5;background:var(--g);margin:0 8px;border-radius:22px;padding:0 12px;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:6px;cursor:pointer;color:#fff;font-size:13px;font-weight:800;box-shadow:0 4px 16px rgba(46,204,113,.4);height:40px}
 /* header */
 .hdr{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 0;flex-shrink:0}
 .logo{font-size:26px;font-weight:900;color:var(--g);letter-spacing:-1px}
@@ -1865,16 +1865,19 @@ if(window.visualViewport){
       const active=document.querySelector('.screen.active');
       if(!active || active.id==='home') return;
       const backId=getBackScreen(active.id);
+      const screenW=phone.offsetWidth;
+      const maxDrag=screenW*0.5; // до половины экрана
+      const limited=Math.min(dx, maxDrag);
       // показываем предыдущий экран позади
       if(backId){
         document.querySelectorAll('.screen').forEach(s=>{
-          if(s.id===backId){ s.style.display='flex'; s.style.opacity='1'; s.style.transform=`translateX(${-40+dx*0.15}px)`; }
+          if(s.id===backId){ s.style.display='flex'; s.style.opacity='1'; s.style.transform=`translateX(${-screenW*0.3*(1-limited/maxDrag)}px)`; }
         });
       }
-      const progress=Math.min(dx/280,1);
-      active.style.transform=`translateX(${dx*0.7}px)`;
-      active.style.opacity=String(1-progress*0.2);
-      active.style.boxShadow=`-8px 0 24px rgba(0,0,0,${0.12-progress*0.08})`;
+      const progress=limited/maxDrag;
+      active.style.transform=`translateX(${limited}px)`;
+      active.style.opacity=String(1-progress*0.15);
+      active.style.boxShadow=`-6px 0 20px rgba(0,0,0,${0.1-progress*0.07})`;
     }
   },{passive:true});
 
