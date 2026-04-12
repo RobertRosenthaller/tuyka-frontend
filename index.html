@@ -777,7 +777,7 @@ function openProduct(id,from){
   const nutrition=getNutritionData(p);
   const pdEmoji = document.getElementById('pdEmoji');
   if(p.image){
-    pdEmoji.innerHTML=`<img src="${p.image}" style="width:100%;height:100%;object-fit:contain;padding:20px;cursor:zoom-in;" onclick="openLightbox('${p.image}')" onerror="this.parentElement.textContent='${p.emoji}'">`;
+    pdEmoji.innerHTML=`<img src="${p.image}" style="width:100%;height:100%;object-fit:cover;cursor:zoom-in;" onclick="openLightbox('${p.image}')" onerror="this.parentElement.textContent='${p.emoji}'">`;
     pdEmoji.style.background='#f8f8f8';
   } else {
     pdEmoji.textContent=p.emoji;
