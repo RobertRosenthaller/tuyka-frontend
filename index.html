@@ -20,21 +20,17 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--g:#2ECC71;--gd:#27AE60;--gl:rgba(46,204,113,.13);--r:18px;--rs:12px;font-family:'Nunito',sans-serif}
 body{background:#f5f5f5;display:flex;justify-content:center;padding:0;min-height:100vh;overflow:hidden}
-.phone{width:100%;max-width:480px;height:100dvh;background:#f5f5f5;border-radius:0;overflow:hidden;box-shadow:none;position:relative;display:flex;flex-direction:column}
+.phone{width:100%;max-width:480px;height:100vh;background:#f5f5f5;border-radius:0;overflow:hidden;box-shadow:none;position:relative}
 @media(min-width:480px){
   body{background:#e8f0e8;padding:20px 0}
   .phone{width:375px;height:min(812px,calc(100vh - 40px));border-radius:44px;box-shadow:0 30px 80px rgba(0,0,0,.25)}
 }
-.screen{display:none;flex-direction:column;flex:1;min-height:0;position:relative;background:#f5f5f5;overflow:hidden;opacity:0;transition:opacity .18s ease}
-.screen.active{display:flex;opacity:1}
-/* Lightbox для фото */
-.img-lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999;display:none;align-items:center;justify-content:center;cursor:zoom-out}
-.img-lightbox.show{display:flex}
-.img-lightbox img{max-width:95%;max-height:95%;object-fit:contain;border-radius:12px;animation:lbIn .2s ease}
+.screen{display:none;flex-direction:column;height:100%;min-height:0;position:relative;background:#f5f5f5;overflow:hidden}
+.screen.active{display:flex}
 .sbody{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;padding-bottom:8px}.sbody::-webkit-scrollbar{display:none}
-.bnav{position:sticky;bottom:0;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);border-top:1px solid rgba(0,0,0,.06);display:flex;align-items:center;padding:10px 0 16px;z-index:100;flex-shrink:0}
+.bnav{position:sticky;bottom:0;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);border-top:1px solid rgba(0,0,0,.06);display:flex;padding:10px 0 calc(30px + env(safe-area-inset-bottom,16px));z-index:100;flex-shrink:0}
 .ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;font-size:11px;font-weight:700;color:#bbb;transition:.2s}.ni.on{color:var(--g)}.ni svg{width:22px;height:22px}
-.ctab{flex:1.5;background:var(--g);margin:0 8px;border-radius:22px;padding:0 16px;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:6px;cursor:pointer;color:#fff;font-size:14px;font-weight:800;box-shadow:0 4px 16px rgba(46,204,113,.4);height:44px;min-height:44px}
+.ctab{flex:1.5;background:var(--g);margin:0 8px;border-radius:22px;padding:6px 12px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;color:#fff;font-size:11px;font-weight:800;box-shadow:0 4px 16px rgba(46,204,113,.4)}
 /* header */
 .hdr{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 0;flex-shrink:0}
 .logo{font-size:26px;font-weight:900;color:var(--g);letter-spacing:-1px}
@@ -51,7 +47,7 @@ body{background:#f5f5f5;display:flex;justify-content:center;padding:0;min-height
 .pcard-body{padding:10px 10px 12px}
 .pcard-name{font-size:13px;font-weight:700;color:#111;margin-bottom:2px;line-height:1.3}
 .pcard-sub{font-size:11px;color:#aaa;margin-bottom:8px}
-.pcard-bot{display:flex;align-items:flex-end;justify-content:space-between;min-height:42px;gap:8px}
+.pcard-bot{display:flex;align-items:center;justify-content:space-between}
 .pcard-price{font-size:15px;font-weight:900}
 .add-btn{height:30px;border-radius:15px;background:var(--g);border:none;color:#fff;font-size:13px;font-weight:800;cursor:pointer;padding:0 12px;box-shadow:0 3px 10px rgba(46,204,113,.4);transition:transform .15s;font-family:'Nunito',sans-serif;white-space:nowrap}.add-btn:active{transform:scale(1.08)}
 .qty-ctrl{display:flex;align-items:center;gap:6px}
@@ -74,7 +70,7 @@ body{background:#f5f5f5;display:flex;justify-content:center;padding:0;min-height
 .pdbg-fade{position:absolute;bottom:0;left:0;right:0;height:60%;background:linear-gradient(to bottom,transparent,#111)}
 .pd-scroll{position:absolute;top:0;left:0;right:0;bottom:0;overflow-y:auto;display:flex;flex-direction:column;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y}.pd-scroll::-webkit-scrollbar{display:none}
 .pd-spacer{height:calc(55% - 30px);flex-shrink:0}
-.pd-back{position:absolute;top:14px;left:16px;z-index:20;width:38px;height:38px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(12px);border:1.5px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.pd-back{position:absolute;top:52px;left:16px;z-index:20;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.2);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;cursor:pointer}
 .pd-content{background:#fff;border-radius:24px 24px 0 0;padding:20px 20px 220px;flex:1;position:relative;z-index:5;display:flex;flex-direction:column;min-height:calc(45% + 180px)}
 .pd-fixed-bar{position:sticky;left:0;right:0;bottom:0;z-index:15;margin-top:auto;padding:56px 20px calc(28px + env(safe-area-inset-bottom,0px));background:linear-gradient(to top,rgba(245,245,245,.97) 12%,rgba(245,245,245,.88) 38%,rgba(245,245,245,0) 100%);pointer-events:none}
 .pd-name{font-size:22px;font-weight:900;color:#111;margin-bottom:4px}
@@ -125,7 +121,7 @@ body{background:#f5f5f5;display:flex;justify-content:center;padding:0;min-height
 .add-addr-toggle{display:flex;align-items:center;gap:10px;padding:14px 0;cursor:pointer;color:var(--g)}
 /* profile */
 .ph{background:linear-gradient(135deg,#27AE60,#2ECC71);padding:52px 20px 24px;flex-shrink:0}
-.ph-av{width:68px;height:68px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:#fff;margin:0 auto 10px;border:2px solid rgba(255,255,255,.4);font-family:'Nunito',sans-serif}
+.ph-av{width:68px;height:68px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 10px;border:2px solid rgba(255,255,255,.4)}
 .ph-name{font-size:19px;font-weight:900;color:#fff;text-align:center}.ph-phone{font-size:13px;color:rgba(255,255,255,.75);text-align:center;margin-top:3px}
 .psec{font-size:11px;font-weight:800;color:#aaa;text-transform:uppercase;letter-spacing:.5px;padding:14px 16px 8px}
 .pcard-s{background:#fff;border-radius:var(--r);margin:0 16px 12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05)}
@@ -139,11 +135,10 @@ body{background:#f5f5f5;display:flex;justify-content:center;padding:0;min-height
 .order-action-btn.cancel{background:#f7f7f7;color:#777;border:1px solid #ececec}
 .order-meta-note{font-size:12px;color:#9b9b9b;line-height:1.45;text-align:center;margin-top:10px;padding:0 8px}
 .status-chip{display:inline-flex;align-items:center;border-radius:999px;padding:5px 10px;font-size:11px;font-weight:800}
-.phdr{display:flex;align-items:center;gap:12px;padding:20px 16px 14px;background:#fff;flex-shrink:0}
+.phdr{display:flex;align-items:center;gap:12px;padding:52px 16px 14px;background:#fff;flex-shrink:0}
 .phdr-title{font-size:20px;font-weight:900}
 .back-btn{background:none;border:none;cursor:pointer;padding:0;line-height:0}
 .toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%) translateY(10px);background:rgba(20,20,20,.9);backdrop-filter:blur(12px);color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:700;opacity:0;transition:.3s;pointer-events:none;white-space:nowrap;z-index:999}
-@keyframes lbIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .switcher{width:46px;height:26px;border-radius:13px;background:#ddd;position:relative;cursor:pointer;transition:.3s;flex-shrink:0}
 .switcher.on{background:var(--g)}.sw-thumb{width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:.3s;box-shadow:0 2px 6px rgba(0,0,0,.2)}.switcher.on .sw-thumb{left:23px}
@@ -157,6 +152,9 @@ body{background:#f5f5f5;display:flex;justify-content:center;padding:0;min-height
 .register-modal input:focus{border-color:var(--g)}
 .register-btn{width:100%;padding:14px;border-radius:18px;border:none;background:var(--g);color:#fff;font-size:16px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 6px 18px rgba(46,204,113,.28);margin-top:4px}
 .register-note{font-size:12px;color:#9b9b9b;line-height:1.45;margin-top:12px;text-align:center}
+/* review stars */
+#reviewStars span{transition:.2s}
+#reviewStars span.filled{filter:none}
 
 </style>
 
@@ -188,7 +186,7 @@ body{background:#f5f5f5;display:flex;justify-content:center;padding:0;min-height
 
 <!-- CATALOG -->
 <div id="catalog" class="screen">
-  <div class="phdr"><span class="phdr-title">Каталог</span></div>
+  <div class="phdr"><button class="back-btn" onclick="go('home')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button><span class="phdr-title">Каталог</span></div>
   <div class="sbar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Найти..." oninput="search(this.value)"></div>
   <div class="sbody">
     <div id="catGrid" class="cgrid"></div>
@@ -261,9 +259,7 @@ body{background:#f5f5f5;display:flex;justify-content:center;padding:0;min-height
     <div class="pcard-s" id="orderList"></div>
     <div class="psec">Настройки</div>
     <div class="pcard-s">
-      <div class="prow"><div class="prow-ic">🔔</div><div class="prow-txt"><div class="prow-lbl">Уведомления</div></div><span style="color:#ddd">›</span></div>
-      <div class="prow"><div class="prow-ic">❓</div><div class="prow-txt"><div class="prow-lbl">Поддержка</div></div><span style="color:#ddd">›</span></div>
-      <div class="prow"><div class="prow-ic">📄</div><div class="prow-txt"><div class="prow-lbl">О приложении</div></div><span style="color:#ddd">›</span></div>
+      <div class="prow" onclick="window.location='tel:+79280000000'"><div class="prow-ic">💬</div><div class="prow-txt"><div class="prow-lbl">Поддержка</div><div class="prow-sub">+7 (928) 000-00-00</div></div><span style="color:#ddd">›</span></div>
     </div>
   </div>
 </div>
@@ -320,10 +316,26 @@ body{background:#f5f5f5;display:flex;justify-content:center;padding:0;min-height
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
-<div class="img-lightbox" id="imgLightbox" onclick="closeLightbox()">
-  <img id="lightboxImg" src="" alt="">
+
+<!-- REVIEW MODAL -->
+<div class="register-modal-bg" id="reviewModal">
+  <div class="register-modal">
+    <div style="text-align:center;margin-bottom:8px;font-size:32px">🎉</div>
+    <div class="register-title" style="text-align:center">Заказ доставлен!</div>
+    <div class="register-sub" style="text-align:center">Как вам доставка? Оцените заказ #<span id="reviewOrderId"></span></div>
+    <div id="reviewStars" style="display:flex;justify-content:center;gap:8px;margin:16px 0;font-size:36px;cursor:pointer">
+      <span onclick="setReviewStar(1)" data-star="1">☆</span>
+      <span onclick="setReviewStar(2)" data-star="2">☆</span>
+      <span onclick="setReviewStar(3)" data-star="3">☆</span>
+      <span onclick="setReviewStar(4)" data-star="4">☆</span>
+      <span onclick="setReviewStar(5)" data-star="5">☆</span>
+    </div>
+    <textarea id="reviewComment" placeholder="Комментарий (необязательно)" style="width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:12px;font-size:14px;font-family:'Nunito',sans-serif;font-weight:600;outline:none;resize:none;height:80px;margin-bottom:10px;transition:.2s" onfocus="this.style.borderColor='#2ECC71'" onblur="this.style.borderColor='#e0e0e0'"></textarea>
+    <button class="register-btn" onclick="submitReview()">Отправить отзыв</button>
+    <div style="text-align:center;margin-top:10px"><span onclick="closeReviewModal()" style="font-size:13px;color:#aaa;cursor:pointer;font-weight:700">Закрыть</span></div>
+  </div>
 </div>
+<div class="toast" id="toast"></div>
 </div>
 
 <script>
@@ -337,44 +349,656 @@ let CATS=[
   {id:'pasta',name:'Макароны',emoji:'🍝',grad:'linear-gradient(135deg,#e74c3c,#c0392b)'},
   {id:'frozen',name:'Заморозка',emoji:'🧊',grad:'linear-gradient(135deg,#5dade2,#2e86c1)'},
 ];
-let PRODUCTS=[];
+let PRODUCTS=[
+  {
+    "id": 1,
+    "cat": "drinks",
+    "name": "El-Borz 0,5 л",
+    "price": 38,
+    "weight": "500 мл",
+    "emoji": "💧"
+  },
+  {
+    "id": 2,
+    "cat": "drinks",
+    "name": "A Cappella Яблоко 1л",
+    "price": 88,
+    "weight": "1 л",
+    "emoji": "🍎"
+  },
+  {
+    "id": 3,
+    "cat": "drinks",
+    "name": "A Cappella Вишня 1л",
+    "price": 88,
+    "weight": "1 л",
+    "emoji": "🍒"
+  },
+  {
+    "id": 4,
+    "cat": "drinks",
+    "name": "A Cappella Клюква 1л",
+    "price": 88,
+    "weight": "1 л",
+    "emoji": "🫐"
+  },
+  {
+    "id": 5,
+    "cat": "drinks",
+    "name": "A Cappella Мультифрукт 1л",
+    "price": 88,
+    "weight": "1 л",
+    "emoji": "🍹"
+  },
+  {
+    "id": 6,
+    "cat": "drinks",
+    "name": "Aloe Vera напиток 1,5л",
+    "price": 120,
+    "weight": "1.5 л",
+    "emoji": "🌿"
+  },
+  {
+    "id": 7,
+    "cat": "drinks",
+    "name": "ASCANIA Гранат 0,5л",
+    "price": 55,
+    "weight": "500 мл",
+    "emoji": "🍷"
+  },
+  {
+    "id": 8,
+    "cat": "drinks",
+    "name": "Fuzetea Клубника и малина 0,5л",
+    "price": 50,
+    "weight": "500 мл",
+    "emoji": "🧃"
+  },
+  {
+    "id": 9,
+    "cat": "drinks",
+    "name": "Cappuccino 240мл",
+    "price": 75,
+    "weight": "240 мл",
+    "emoji": "☕"
+  },
+  {
+    "id": 10,
+    "cat": "drinks",
+    "name": "Coca-Cola 330мл",
+    "price": 67,
+    "weight": "330 мл",
+    "emoji": "🥤"
+  },
+  {
+    "id": 11,
+    "cat": "dairy",
+    "name": "Actimel 4 шт",
+    "price": 160,
+    "weight": "4 шт",
+    "emoji": "🥛"
+  },
+  {
+    "id": 12,
+    "cat": "dairy",
+    "name": "Actimel киви-клубника 6 шт",
+    "price": 240,
+    "weight": "6 шт",
+    "emoji": "🥛"
+  },
+  {
+    "id": 13,
+    "cat": "dairy",
+    "name": "Alpenland йогурт клубника/персик 95гр",
+    "price": 28,
+    "weight": "95 г",
+    "emoji": "🍓"
+  },
+  {
+    "id": 14,
+    "cat": "dairy",
+    "name": "Alpenland йогурт лесные ягоды/яблоко 95гр",
+    "price": 23,
+    "weight": "95 г",
+    "emoji": "🫐"
+  },
+  {
+    "id": 15,
+    "cat": "dairy",
+    "name": "Dolce Vita йогурт ананасовый 700гр",
+    "price": 80,
+    "weight": "700 г",
+    "emoji": "🍍"
+  },
+  {
+    "id": 16,
+    "cat": "dairy",
+    "name": "Dolce Vita йогурт персиковый 700гр",
+    "price": 78,
+    "weight": "700 г",
+    "emoji": "🍑"
+  },
+  {
+    "id": 17,
+    "cat": "dairy",
+    "name": "Dolce Vita йогурт вишневый 700гр",
+    "price": 80,
+    "weight": "700 г",
+    "emoji": "🍒"
+  },
+  {
+    "id": 18,
+    "cat": "dairy",
+    "name": "Агуша творог детский 200гр",
+    "price": 47,
+    "weight": "200 г",
+    "emoji": "🧀"
+  },
+  {
+    "id": 19,
+    "cat": "dairy",
+    "name": "Активиа биойогурт 150гр",
+    "price": 47,
+    "weight": "150 г",
+    "emoji": "🥣"
+  },
+  {
+    "id": 20,
+    "cat": "dairy",
+    "name": "President сливочный плавленый сыр 200гр",
+    "price": 225,
+    "weight": "200 г",
+    "emoji": "🧀"
+  },
+  {
+    "id": 21,
+    "cat": "bread",
+    "name": "Dr. Korner хлебцы овсяно-пшеничные 100гр",
+    "price": 80,
+    "weight": "100 г",
+    "emoji": "🍘"
+  },
+  {
+    "id": 22,
+    "cat": "bread",
+    "name": "Dr. Korner хлебцы рисовые 100гр",
+    "price": 53,
+    "weight": "100 г",
+    "emoji": "🍘"
+  },
+  {
+    "id": 23,
+    "cat": "bread",
+    "name": "Dr. Korner хлебцы клюквенные 100гр",
+    "price": 82,
+    "weight": "100 г",
+    "emoji": "🍘"
+  },
+  {
+    "id": 24,
+    "cat": "bread",
+    "name": "Dr.Korner хлебцы с чиа и льном 100гр",
+    "price": 75,
+    "weight": "100 г",
+    "emoji": "🌾"
+  },
+  {
+    "id": 25,
+    "cat": "bread",
+    "name": "Granum Trade мука цельнозерновая 2кг",
+    "price": 110,
+    "weight": "2 кг",
+    "emoji": "🌾"
+  },
+  {
+    "id": 26,
+    "cat": "bread",
+    "name": "Granum Trade рис Бальдо 700гр",
+    "price": 95,
+    "weight": "700 г",
+    "emoji": "🍚"
+  },
+  {
+    "id": 27,
+    "cat": "bread",
+    "name": "Агрокультура рис пропаренный 800гр",
+    "price": 130,
+    "weight": "800 г",
+    "emoji": "🍚"
+  },
+  {
+    "id": 28,
+    "cat": "bread",
+    "name": "Кубанское Лето геркулес 400гр",
+    "price": 58,
+    "weight": "400 г",
+    "emoji": "🥣"
+  },
+  {
+    "id": 29,
+    "cat": "bread",
+    "name": "Мистраль гречка 2кг",
+    "price": 320,
+    "weight": "2 кг",
+    "emoji": "🌾"
+  },
+  {
+    "id": 30,
+    "cat": "bread",
+    "name": "Мистраль рис Самарканд 500гр",
+    "price": 115,
+    "weight": "500 г",
+    "emoji": "🍚"
+  },
+  {
+    "id": 31,
+    "cat": "sweets",
+    "name": "Akulchev венские вафли варёная сгущёнка 100гр",
+    "price": 50,
+    "weight": "100 г",
+    "emoji": "🧇"
+  },
+  {
+    "id": 32,
+    "cat": "sweets",
+    "name": "Akulchev венские вафли сливочная ваниль 100гр",
+    "price": 55,
+    "weight": "100 г",
+    "emoji": "🧇"
+  },
+  {
+    "id": 33,
+    "cat": "sweets",
+    "name": "Choco Pie 112гр",
+    "price": 50,
+    "weight": "112 г",
+    "emoji": "🍰"
+  },
+  {
+    "id": 34,
+    "cat": "sweets",
+    "name": "Dove молочный шоколад 90гр",
+    "price": 120,
+    "weight": "90 г",
+    "emoji": "🍫"
+  },
+  {
+    "id": 35,
+    "cat": "sweets",
+    "name": "Milka chocolate & TUC 87гр",
+    "price": 90,
+    "weight": "87 г",
+    "emoji": "🍫"
+  },
+  {
+    "id": 36,
+    "cat": "sweets",
+    "name": "Milka Cow Spots 100гр",
+    "price": 90,
+    "weight": "100 г",
+    "emoji": "🍫"
+  },
+  {
+    "id": 37,
+    "cat": "sweets",
+    "name": "Milka молочный шоколад 87,5гр",
+    "price": 120,
+    "weight": "87.5 г",
+    "emoji": "🍫"
+  },
+  {
+    "id": 38,
+    "cat": "sweets",
+    "name": "OREO клубничный вкус 95гр",
+    "price": 83,
+    "weight": "95 г",
+    "emoji": "🍪"
+  },
+  {
+    "id": 39,
+    "cat": "sweets",
+    "name": "Аленка пирожное 6 шт 240гр",
+    "price": 150,
+    "weight": "240 г",
+    "emoji": "🧁"
+  },
+  {
+    "id": 40,
+    "cat": "sweets",
+    "name": "Бабаевский горький шоколад 100гр",
+    "price": 70,
+    "weight": "100 г",
+    "emoji": "🍫"
+  },
+  {
+    "id": 41,
+    "cat": "baby",
+    "name": "Algo детская бутылка 280мл",
+    "price": 175,
+    "weight": "280 мл",
+    "emoji": "🍼"
+  },
+  {
+    "id": 42,
+    "cat": "baby",
+    "name": "Avent ultra air соска",
+    "price": 820,
+    "weight": "1 шт",
+    "emoji": "👶"
+  },
+  {
+    "id": 43,
+    "cat": "baby",
+    "name": "Mama Papa Help соска для бутылочки",
+    "price": 65,
+    "weight": "1 шт",
+    "emoji": "🍼"
+  },
+  {
+    "id": 44,
+    "cat": "baby",
+    "name": "Roxy Kids ниблер",
+    "price": 215,
+    "weight": "1 шт",
+    "emoji": "👶"
+  },
+  {
+    "id": 45,
+    "cat": "baby",
+    "name": "Бусинка бутылочка пластиковая",
+    "price": 150,
+    "weight": "1 шт",
+    "emoji": "🍼"
+  },
+  {
+    "id": 46,
+    "cat": "baby",
+    "name": "Бусинка ершик с губкой 2 шт",
+    "price": 70,
+    "weight": "2 шт",
+    "emoji": "🧽"
+  },
+  {
+    "id": 47,
+    "cat": "baby",
+    "name": "Бусинка набор по уходу за малышом",
+    "price": 300,
+    "weight": "1 набор",
+    "emoji": "👶"
+  },
+  {
+    "id": 48,
+    "cat": "baby",
+    "name": "Бусинка ниблер",
+    "price": 190,
+    "weight": "1 шт",
+    "emoji": "👶"
+  },
+  {
+    "id": 49,
+    "cat": "baby",
+    "name": "Бусинка цепочка для пустышки",
+    "price": 180,
+    "weight": "1 шт",
+    "emoji": "🔗"
+  },
+  {
+    "id": 50,
+    "cat": "baby",
+    "name": "Бутылка Малышам стекло 240мл",
+    "price": 380,
+    "weight": "240 мл",
+    "emoji": "🍼"
+  },
+  {
+    "id": 51,
+    "cat": "chem",
+    "name": "Sanfor WS гель лимонная свежесть 1л",
+    "price": 200,
+    "weight": "1 л",
+    "emoji": "🧴"
+  },
+  {
+    "id": 52,
+    "cat": "chem",
+    "name": "Sanfor WS гель цветущая сакура 1л",
+    "price": 185,
+    "weight": "1 л",
+    "emoji": "🧴"
+  },
+  {
+    "id": 53,
+    "cat": "chem",
+    "name": "Sanfor спрей антиржавчина 750мл",
+    "price": 350,
+    "weight": "750 мл",
+    "emoji": "🧽"
+  },
+  {
+    "id": 54,
+    "cat": "chem",
+    "name": "AIVA крем-мыло Черничное 5л",
+    "price": 210,
+    "weight": "5 л",
+    "emoji": "🧼"
+  },
+  {
+    "id": 55,
+    "cat": "chem",
+    "name": "Bodyart гель для душа 250мл",
+    "price": 170,
+    "weight": "250 мл",
+    "emoji": "🧴"
+  },
+  {
+    "id": 56,
+    "cat": "chem",
+    "name": "Cillit Bang Антижир 450мл",
+    "price": 190,
+    "weight": "450 мл",
+    "emoji": "🧽"
+  },
+  {
+    "id": 57,
+    "cat": "chem",
+    "name": "Clean Tone для ванн и душевых 500мл",
+    "price": 180,
+    "weight": "500 мл",
+    "emoji": "🚿"
+  },
+  {
+    "id": 58,
+    "cat": "chem",
+    "name": "Clean Tone для кухни 500мл",
+    "price": 180,
+    "weight": "500 мл",
+    "emoji": "🍽️"
+  },
+  {
+    "id": 59,
+    "cat": "chem",
+    "name": "Diseta губка для посуды 5 шт",
+    "price": 70,
+    "weight": "5 шт",
+    "emoji": "🧽"
+  },
+  {
+    "id": 60,
+    "cat": "chem",
+    "name": "I-Clean для мытья пола и стен Лимон 1л",
+    "price": 170,
+    "weight": "1 л",
+    "emoji": "🪣"
+  },
+  {
+    "id": 61,
+    "cat": "pasta",
+    "name": "ПростоДом лапша лагманная яичная 500г",
+    "price": 95,
+    "weight": "500 г",
+    "emoji": "🍜"
+  },
+  {
+    "id": 62,
+    "cat": "pasta",
+    "name": "Barilla Bavettine 450гр",
+    "price": 95,
+    "weight": "450 г",
+    "emoji": "🍝"
+  },
+  {
+    "id": 63,
+    "cat": "pasta",
+    "name": "MAKFA лапша 400гр",
+    "price": 52,
+    "weight": "400 г",
+    "emoji": "🍜"
+  },
+  {
+    "id": 64,
+    "cat": "pasta",
+    "name": "MAKFA спиральки 400гр",
+    "price": 53,
+    "weight": "400 г",
+    "emoji": "🍝"
+  },
+  {
+    "id": 65,
+    "cat": "pasta",
+    "name": "MAKFA трубочки 450гр",
+    "price": 53,
+    "weight": "450 г",
+    "emoji": "🍝"
+  },
+  {
+    "id": 66,
+    "cat": "pasta",
+    "name": "Байсад спагетти 400 г",
+    "price": 45,
+    "weight": "400 г",
+    "emoji": "🍝"
+  },
+  {
+    "id": 67,
+    "cat": "pasta",
+    "name": "КОРОНА вермишель 3кг",
+    "price": 172,
+    "weight": "3 кг",
+    "emoji": "🍜"
+  },
+  {
+    "id": 68,
+    "cat": "pasta",
+    "name": "Марва паутинка 2кг",
+    "price": 115,
+    "weight": "2 кг",
+    "emoji": "🍜"
+  },
+  {
+    "id": 69,
+    "cat": "pasta",
+    "name": "Шебекинские Русский Рожок 450 г",
+    "price": 58,
+    "weight": "450 г",
+    "emoji": "🍝"
+  },
+  {
+    "id": 70,
+    "cat": "pasta",
+    "name": "SEN SOY фунчоза 200гр",
+    "price": 175,
+    "weight": "200 г",
+    "emoji": "🍜"
+  },
+  {
+    "id": 71,
+    "cat": "frozen",
+    "name": "DIKNUS вареники с картошкой",
+    "price": 360,
+    "weight": "900 г",
+    "emoji": "🥟"
+  },
+  {
+    "id": 72,
+    "cat": "frozen",
+    "name": "DIKNUS вареники с творогом",
+    "price": 520,
+    "weight": "900 г",
+    "emoji": "🥟"
+  },
+  {
+    "id": 73,
+    "cat": "frozen",
+    "name": "DIKNUS галушки кукурузные",
+    "price": 370,
+    "weight": "900 г",
+    "emoji": "🥟"
+  },
+  {
+    "id": 74,
+    "cat": "frozen",
+    "name": "DIKNUS мини-пельмени",
+    "price": 710,
+    "weight": "900 г",
+    "emoji": "🥟"
+  },
+  {
+    "id": 75,
+    "cat": "frozen",
+    "name": "DIKNUS слоёный хинкал",
+    "price": 390,
+    "weight": "900 г",
+    "emoji": "🥟"
+  },
+  {
+    "id": 76,
+    "cat": "frozen",
+    "name": "Hortex горошек зелёный 400гр",
+    "price": 130,
+    "weight": "400 г",
+    "emoji": "🫛"
+  },
+  {
+    "id": 77,
+    "cat": "frozen",
+    "name": "Hortex овощи для жарки 400гр",
+    "price": 150,
+    "weight": "400 г",
+    "emoji": "🥦"
+  },
+  {
+    "id": 78,
+    "cat": "frozen",
+    "name": "Крабовые палочки Санта Бремор 400гр",
+    "price": 165,
+    "weight": "400 г",
+    "emoji": "🦀"
+  },
+  {
+    "id": 79,
+    "cat": "frozen",
+    "name": "Манты Рицкъа 900гр",
+    "price": 265,
+    "weight": "900 г",
+    "emoji": "🥟"
+  },
+  {
+    "id": 80,
+    "cat": "frozen",
+    "name": "Пельмени Рицкъа 900гр",
+    "price": 185,
+    "weight": "900 г",
+    "emoji": "🥟"
+  }
+];
 const POPULAR_IDS=[1, 11, 21, 31, 41, 51, 61, 71];
 const MIN_ORDER=1000, FREE_DELIVERY=3000, DELIVERY_COST=250;
 const API_BASE='https://tuyka-backend-production.up.railway.app';
-// Координаты даркстора (центр Грозного — поменяй на реальные)
-const DARKSTORE_LAT=43.3169;
-const DARKSTORE_LON=45.6988;
-const ASSEMBLY_MINUTES=5; // время сборки
-const COURIER_PICKUP_MINUTES=7; // время пока курьер приедет на склад
-
-async function calcDeliveryMinutes(address){
-  try{
-    const url=`https://geocode-maps.yandex.ru/1.x/?apikey=ваш_ключ&format=json&geocode=${encodeURIComponent(address+', Грозный')}`;
-    const r=await fetch(url);
-    const j=await r.json();
-    const pos=j?.response?.GeoObjectCollection?.featureMember?.[0]?.GeoObject?.Point?.pos;
-    if(!pos) return 45;
-    const [lon,lat]=pos.split(' ').map(Number);
-    // считаем расстояние по формуле Haversine
-    const R=6371;
-    const dLat=(lat-DARKSTORE_LAT)*Math.PI/180;
-    const dLon=(lon-DARKSTORE_LON)*Math.PI/180;
-    const a=Math.sin(dLat/2)**2+Math.cos(DARKSTORE_LAT*Math.PI/180)*Math.cos(lat*Math.PI/180)*Math.sin(dLon/2)**2;
-    const dist=R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
-    // скорость курьера ~20 км/ч в городе
-    const driveMinutes=Math.round(dist/20*60);
-    const total=ASSEMBLY_MINUTES+COURIER_PICKUP_MINUTES+driveMinutes;
-    return Math.min(Math.max(total,20),60);
-  }catch{
-    return 45;
-  }
-}
 const STORAGE_KEYS={
   profile:'tuyka_profile_v2',
   addresses:'tuyka_addresses_v2',
   activeAddr:'tuyka_active_addr_v2',
-  registered:'tuyka_registered_v1',
-  cart:'tuyka_cart_v1'
+  registered:'tuyka_registered_v1'
 };
 const DEFAULT_PROFILE={
   user_id:'',
@@ -401,13 +1025,6 @@ function safeLocalStorageSet(key, value){
 function loadProfileState(){
   const saved=safeLocalStorageGet(STORAGE_KEYS.profile, null);
   return {...DEFAULT_PROFILE, ...(saved||{})};
-}
-function loadCartState(){
-  const saved=safeLocalStorageGet(STORAGE_KEYS.cart, null);
-  return saved && typeof saved==='object' ? saved : {};
-}
-function saveCartState(){
-  safeLocalStorageSet(STORAGE_KEYS.cart, cart);
 }
 function loadAddressesState(){
   const saved=safeLocalStorageGet(STORAGE_KEYS.addresses, null);
@@ -446,17 +1063,7 @@ function formatDateInput(input){
     }
     result+='.'+mm;
   }
-  if(v.length>4){
-    let yyyy=v.slice(4,8);
-    // ограничиваем год: не раньше 1900 и не позже текущего
-    if(yyyy.length===4){
-      const y=Number(yyyy);
-      const currentYear=new Date().getFullYear();
-      if(y<1900) yyyy='1900';
-      else if(y>currentYear) yyyy=String(currentYear);
-    }
-    result+='.'+yyyy;
-  }
+  if(v.length>4){result+='.'+v.slice(4,8);}
   input.value=result;
 }
 function formatPhoneInput(input){
@@ -525,7 +1132,7 @@ function updateProfileHeader(){
 }
 
 let profile=loadProfileState();
-let cart=loadCartState(), addresses=loadAddressesState();
+let cart={}, addresses=loadAddressesState();
 let activeAddr=loadActiveAddressIndex(addresses), orders=[], prevScreen='home', currentPdId=null, doorSwitch=false, currentCatId='', lastQuery='', addrPickerFrom='cart';
 let ordersLoading=false, catalogLoading=false;
 
@@ -585,16 +1192,6 @@ async function refreshProfile(){
 }
 
 function go(id){
-  // сбрасываем поиск при выходе из каталога
-  if(id!=='catalog' && lastQuery){
-    lastQuery='';
-    const inp=document.querySelector('#catalog input[type=text]');
-    if(inp) inp.value='';
-    const sr=document.getElementById('searchResults');
-    const cg=document.getElementById('catGrid');
-    if(sr) sr.style.display='none';
-    if(cg) cg.style.display='';
-  }
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   if(id==='cart') renderCart();
@@ -717,7 +1314,7 @@ function prodCardHTML(p, from){
     ?`<div class="qty-ctrl"><button class="qbtn minus" onclick="event.stopPropagation();cq(${p.id},-1,'${from}')">−</button><span class="qval">${q}</span><button class="qbtn plus" onclick="event.stopPropagation();cq(${p.id},1,'${from}')">+</button></div>`
     :`<button class="add-btn" onclick="event.stopPropagation();cq(${p.id},1,'${from}')">В корзину</button>`;
   return `<div class="pcard" onclick="openProduct(${p.id},'${from}')">
-    <div class="pcard-img">${p.image ? `<img src="${p.image}" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.textContent='${p.emoji}'">` : p.emoji}</div>
+    <div class="pcard-img">${p.emoji}</div>
     <div class="pcard-body">
       <div class="pcard-name">${p.name}</div>
       <div class="pcard-sub">${p.weight}</div>
@@ -729,7 +1326,6 @@ function prodCardHTML(p, from){
 function cq(id,delta,from){
   cart[id]=(cart[id]||0)+delta;
   if(cart[id]<=0) delete cart[id];
-  saveCartState();
   updateTabs();
   if(from==='home') renderHomeGrid();
   else if(from==='catItems') renderCatItems(currentCatId);
@@ -737,16 +1333,12 @@ function cq(id,delta,from){
   if(delta>0&&(cart[id]||0)===1) showToast('Добавлено в корзину 🛒');
 }
 
-function renderHomeGrid(){
-  const ids=POPULAR_IDS.map(id=>PRODUCTS.find(x=>x.id===id)).filter(Boolean);
-  const items=ids.length>=4?ids:PRODUCTS.slice(0,8);
-  document.getElementById('homeGrid').innerHTML=items.map(p=>prodCardHTML(p,'home')).join('');
-}
+function renderHomeGrid(){document.getElementById('homeGrid').innerHTML=POPULAR_IDS.map(id=>{const p=PRODUCTS.find(x=>x.id===id);return p?prodCardHTML(p,'home'):'';}).join('');}
 
 function renderCatalog(){
   document.getElementById('catGrid').innerHTML=CATS.map(c=>`
     <div class="ccat" onclick="openCat('${c.id}','${c.name}')">
-      <div class="ccat-bg" style="background:${c.image?'#222':c.grad}">${c.image?`<img src="${c.image}" style="width:100%;height:100%;object-fit:cover;">`:c.emoji}</div>
+      <div class="ccat-bg" style="background:${c.grad}">${c.emoji}</div>
       <div class="ccat-ov"><span class="ccat-name">${c.name}</span></div>
     </div>`).join('');
 }
@@ -775,14 +1367,7 @@ function openProduct(id,from){
   prevScreen=from==='searchRes'?'catalog':from; currentPdId=id;
   const p=PRODUCTS.find(x=>x.id===id);
   const nutrition=getNutritionData(p);
-  const pdEmoji = document.getElementById('pdEmoji');
-  if(p.image){
-    pdEmoji.innerHTML=`<img src="${p.image}" style="width:100%;height:100%;object-fit:cover;cursor:zoom-in;" onclick="openLightbox('${p.image}')" onerror="this.parentElement.textContent='${p.emoji}'">`;
-    pdEmoji.style.background='#f8f8f8';
-  } else {
-    pdEmoji.textContent=p.emoji;
-    pdEmoji.style.background='#1a1a1a';
-  }
+  document.getElementById('pdEmoji').textContent=p.emoji;
   document.getElementById('pdName').textContent=p.name;
   document.getElementById('pdPrice').textContent=p.price+'₽';
   document.getElementById('pdWeight').textContent=p.weight;
@@ -796,11 +1381,6 @@ function openProduct(id,from){
   }
   renderPdAction();
   go('product');
-  // сбрасываем скролл карточки
-  requestAnimationFrame(()=>{
-    const s=document.querySelector('.pd-scroll');
-    if(s) s.scrollTop=0;
-  });
 }
 function renderPdAction(){
   const p=PRODUCTS.find(x=>x.id===currentPdId); if(!p) return;
@@ -879,7 +1459,7 @@ function renderCart(){
     <div class="order-meta-note">Отмена доступна, пока до ориентировочной доставки остаётся 15 минут или больше.</div>`;
 }
 
-function cartCq(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];saveCartState();updateTabs();renderCart();}
+function cartCq(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];updateTabs();renderCart();}
 
 async function checkout(){
   if(!isRegistered()){
@@ -889,7 +1469,6 @@ async function checkout(){
   }
   const keys=Object.keys(cart).filter(k=>cart[k]>0);
   if(!keys.length||cartSubtotal()<MIN_ORDER) return;
-  const deliveryMinutes=await calcDeliveryMinutes(addresses[activeAddr].street);
   const payload={
     customer:{...getCustomerPayload()},
     address:{
@@ -902,7 +1481,7 @@ async function checkout(){
     comment:'',
     delivery_fee:DELIVERY_COST,
     free_delivery_threshold:FREE_DELIVERY,
-    estimated_delivery_minutes:deliveryMinutes,
+    estimated_delivery_minutes:45,
     items:keys.map(id=>({product_id:Number(id),qty:cart[id]}))
   };
   try{
@@ -911,7 +1490,6 @@ async function checkout(){
       body:JSON.stringify(payload)
     });
     cart={};
-    saveCartState();
     updateTabs();
     await loadOrders({silent:true});
     showToast(`Заказ #${data.order.id} принят`);
@@ -1157,6 +1735,67 @@ function closeOrderModal(){document.getElementById('orderModal').classList.remov
 
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
 
+
+// ===== REVIEW =====
+let reviewOrderId = null;
+let reviewStar = 0;
+const REVIEWED_KEY = 'tuyka_reviewed_orders';
+
+function getReviewedOrders(){
+  return safeLocalStorageGet(REVIEWED_KEY, []);
+}
+function markOrderReviewed(id){
+  const list = getReviewedOrders();
+  if(!list.includes(String(id))) list.push(String(id));
+  safeLocalStorageSet(REVIEWED_KEY, list);
+}
+
+function setReviewStar(n){
+  reviewStar = n;
+  document.querySelectorAll('#reviewStars span').forEach((s,i)=>{
+    s.textContent = i < n ? '⭐' : '☆';
+  });
+}
+
+function openReviewModal(orderId){
+  reviewOrderId = orderId;
+  reviewStar = 0;
+  document.getElementById('reviewOrderId').textContent = orderId;
+  document.querySelectorAll('#reviewStars span').forEach(s=>s.textContent='☆');
+  document.getElementById('reviewComment').value = '';
+  document.getElementById('reviewModal').classList.add('show');
+}
+
+function closeReviewModal(){
+  document.getElementById('reviewModal').classList.remove('show');
+  if(reviewOrderId) markOrderReviewed(reviewOrderId);
+  reviewOrderId = null;
+}
+
+async function submitReview(){
+  if(!reviewStar){ showToast('Поставьте оценку'); return; }
+  const comment = document.getElementById('reviewComment').value.trim();
+  try{
+    await api(`/api/orders/${reviewOrderId}/review`, {
+      method:'POST',
+      body: JSON.stringify({ rating: reviewStar, comment })
+    });
+  }catch(e){ /* игнорируем ошибку */ }
+  markOrderReviewed(reviewOrderId);
+  closeReviewModal();
+  showToast('Спасибо за отзыв! ⭐');
+}
+
+function checkPendingReviews(){
+  if(!isRegistered()) return;
+  const reviewed = getReviewedOrders();
+  const pending = orders.find(o =>
+    o.status === 'DELIVERED' && !reviewed.includes(String(o.id))
+  );
+  if(pending) setTimeout(()=>openReviewModal(pending.id), 600);
+}
+// ===== END REVIEW =====
+
 setInterval(async ()=>{
   if(document.getElementById('profile').classList.contains('active') || document.getElementById('orderModal').classList.contains('show')){
     await loadOrders({silent:true});
@@ -1168,39 +1807,12 @@ updateProfileHeader();
 updateAddressLabels();
 renderHomeGrid();
 renderCatalog();
-updateTabs();
 loadCatalog({silent:true});
 if(isRegistered()){
-  loadOrders({silent:true});
+  loadOrders({silent:true}).then(()=>checkPendingReviews());
 }else{
   setTimeout(()=>openRegistrationModal(),120);
 }
-
-function openLightbox(src){
-  const lb=document.getElementById('imgLightbox');
-  document.getElementById('lightboxImg').src=src;
-  lb.classList.add('show');
-}
-function closeLightbox(){
-  document.getElementById('imgLightbox').classList.remove('show');
-}
-
-// Фикс клавиатуры в PWA — сайт не уезжает вверх
-if(window.visualViewport){
-  let lastHeight=window.visualViewport.height;
-  window.visualViewport.addEventListener('resize', ()=>{
-    const h=window.visualViewport.height;
-    const phone=document.querySelector('.phone');
-    // только уменьшаем если клавиатура открылась (высота уменьшилась)
-    if(h < lastHeight - 100){
-      phone.style.height = h + 'px';
-    } else {
-      phone.style.height = '';
-    }
-    lastHeight=h;
-  });
-}
-
 
 if('serviceWorker' in navigator){
   window.addEventListener('load', () => {
