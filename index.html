@@ -746,7 +746,7 @@ function renderHomeGrid(){
 function renderCatalog(){
   document.getElementById('catGrid').innerHTML=CATS.map(c=>`
     <div class="ccat" onclick="openCat('${c.id}','${c.name}')">
-      <div class="ccat-bg" style="background:${c.grad}">${c.emoji}</div>
+      <div class="ccat-bg" style="background:${c.image?'#222':c.grad}">${c.image?`<img src="${c.image}" style="width:100%;height:100%;object-fit:cover;">`:c.emoji}</div>
       <div class="ccat-ov"><span class="ccat-name">${c.name}</span></div>
     </div>`).join('');
 }
