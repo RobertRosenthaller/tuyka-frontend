@@ -1194,7 +1194,6 @@ function openReviewModal(orderId){
 }
 function closeReviewModal(){
   document.getElementById('reviewModal').classList.remove('show');
-  if(reviewOrderId) markOrderReviewed(reviewOrderId);
   reviewOrderId=null;
 }
 async function submitReview(){
